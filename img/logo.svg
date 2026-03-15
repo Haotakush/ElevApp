@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Background with rounded corners -->
+  <rect width="256" height="256" rx="48" fill="#E8983E"/>
+  
+  <!-- Main paw pad (center circle) -->
+  <circle cx="128" cy="135" r="35" fill="white"/>
+  
+  <!-- Top-left toe -->
+  <circle cx="75" cy="65" r="22" fill="white"/>
+  
+  <!-- Top-right toe -->
+  <circle cx="181" cy="65" r="22" fill="white"/>
+  
+  <!-- Bottom-left toe -->
+  <circle cx="75" cy="180" r="22" fill="white"/>
+  
+  <!-- Bottom-right toe -->
+  <circle cx="181" cy="180" r="22" fill="white"/>
+</svg>
