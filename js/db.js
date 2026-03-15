@@ -110,14 +110,22 @@ const DB = (() => {
   }
 
   async function getAnimals(uid, filters = {}) {
-    let query = animalsRef(uid).orderBy('createdAt', 'desc');
+    // Requête simple sans index composite — filtrage côté client
+    const snapshot = await animalsRef(uid).get();
+    let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    if (filters.espece) query = query.where('espece', '==', filters.espece);
-    if (filters.statut) query = query.where('statut', '==', filters.statut);
-    if (filters.sexe) query = query.where('sexe', '==', filters.sexe);
+    if (filters.espece) results = results.filter(a => a.espece === filters.espece);
+    if (filters.statut) results = results.filter(a => a.statut === filters.statut);
+    if (filters.sexe) results = results.filter(a => a.sexe === filters.sexe);
 
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Tri par date de création décroissante
+    results.sort((a, b) => {
+      const da = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
+      const db2 = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
+      return db2 - da;
+    });
+
+    return results;
   }
 
   async function getAnimal(uid, animalId) {
@@ -157,12 +165,12 @@ const DB = (() => {
   }
 
   async function getAnimalsBySex(uid, sexe) {
-    const snapshot = await animalsRef(uid)
-      .where('sexe', '==', sexe)
-      .where('statut', '==', 'actif')
-      .orderBy('nom')
-      .get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Requête simple sans index composite — filtrage côté client
+    const snapshot = await animalsRef(uid).get();
+    return snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .filter(a => a.sexe === sexe && a.statut === 'actif')
+      .sort((a, b) => (a.nom || '').localeCompare(b.nom || ''));
   }
 
   // ---- Journal sanitaire CRUD ----
@@ -171,10 +179,19 @@ const DB = (() => {
   }
 
   async function getHealthEntries(uid, animalId, filters = {}) {
-    let query = healthRef(uid, animalId).orderBy('date', 'desc');
-    if (filters.type) query = query.where('type', '==', filters.type);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => ({ id: doc.id, animalId, ...doc.data() }));
+    // Requête simple sans index composite — filtrage et tri côté client
+    const snapshot = await healthRef(uid, animalId).get();
+    let results = snapshot.docs.map(doc => ({ id: doc.id, animalId, ...doc.data() }));
+
+    if (filters.type) results = results.filter(e => e.type === filters.type);
+
+    results.sort((a, b) => {
+      const da = a.date?.toDate ? a.date.toDate() : new Date(a.date || 0);
+      const db2 = b.date?.toDate ? b.date.toDate() : new Date(b.date || 0);
+      return db2 - da;
+    });
+
+    return results;
   }
 
   async function getAllHealthEntries(uid) {
@@ -245,8 +262,14 @@ const DB = (() => {
   }
 
   async function getSnapshots(uid) {
-    const snapshot = await snapshotsRef(uid).orderBy('date', 'desc').get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const snapshot = await snapshotsRef(uid).get();
+    return snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .sort((a, b) => {
+        const da = a.date?.toDate ? a.date.toDate() : new Date(a.date || 0);
+        const db2 = b.date?.toDate ? b.date.toDate() : new Date(b.date || 0);
+        return db2 - da;
+      });
   }
 
   async function addSnapshot(uid, data) {
