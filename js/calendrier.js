@@ -94,8 +94,14 @@ const Calendrier = (() => {
     try {
       const events = [];
 
+      // Tout en parallèle
+      const [allEntries, animals, porteesSnapshot] = await Promise.all([
+        DB.getAllHealthEntries(uid),
+        DB.getAnimals(uid),
+        firebase.firestore().collection('users').doc(uid).collection('portees').get()
+      ]);
+
       // 1. Rappels sanitaires (depuis tous les animaux)
-      const allEntries = await DB.getAllHealthEntries(uid);
       for (const entry of allEntries) {
         const rappelDate = toDate(entry.rappelDate);
         if (rappelDate && isInMonth(rappelDate, currentMonth, currentYear)) {
@@ -111,12 +117,9 @@ const Calendrier = (() => {
       }
 
       // 2. Naissances prévues (portées en gestation) — filtrage côté client, pas de .where()
-      const animals = await DB.getAnimals(uid);
       const animalsMap = {};
       animals.forEach(a => { animalsMap[a.id] = a; });
 
-      const porteesSnapshot = await firebase.firestore()
-        .collection('users').doc(uid).collection('portees').get();
       const portees = porteesSnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 
       for (const portee of portees) {
