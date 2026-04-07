@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — ElevApp</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f9f9f7;
+      padding: 0 0 60px;
+    }
+    header {
+      background: #E8983E;
+      color: white;
+      padding: 20px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header a { color: white; text-decoration: none; font-size: 1.3rem; }
+    header h1 { font-size: 1.05rem; font-weight: 700; }
+    .container { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #E8983E;
+      margin: 36px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #E8983E22;
+    }
+    h3 { font-size: 1rem; font-weight: 700; margin: 20px 0 8px; color: #333; }
+    p { margin-bottom: 12px; color: #444; }
+    ul { margin: 8px 0 12px 20px; color: #444; }
+    ul li { margin-bottom: 6px; }
+    .badge {
+      display: inline-block;
+      background: #E8983E22;
+      color: #c07020;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      border: 1px solid #eee;
+    }
+    .highlight {
+      background: #fff8f0;
+      border-left: 3px solid #E8983E;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      color: #555;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    th { text-align: left; padding: 8px 12px; background: #f4f4f2; font-size: 0.85rem; color: #666; }
+    td { padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; color: #444; vertical-align: top; }
+    .update-date { font-size: 0.82rem; color: #999; margin-top: 32px; text-align: center; }
+    a { color: #E8983E; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/">←</a>
+  <h1>Politique de confidentialité</h1>
+</header>
+
+<div class="container">
+
+  <div class="badge">Dernière mise à jour : avril 2026</div>
+
+  <div class="highlight">
+    ElevApp s'engage à protéger vos données personnelles. Ce document explique quelles données sont collectées, pourquoi, comment elles sont utilisées et quels sont vos droits.
+  </div>
+
+  <!-- ===== 1. RESPONSABLE ===== -->
+  <h2>1. Responsable du traitement</h2>
+  <div class="card">
+    <p>
+      <strong>[PRÉNOM NOM]</strong> — Auto-entrepreneur<br>
+      SIRET : <strong>[NUMÉRO SIRET]</strong><br>
+      Adresse : <strong>[ADRESSE COMPLÈTE]</strong><br>
+      Email : <a href="mailto:contact@elevapp.fr">contact@elevapp.fr</a>
+    </p>
+  </div>
+
+  <!-- ===== 2. DONNÉES COLLECTÉES ===== -->
+  <h2>2. Données collectées</h2>
+
+  <h3>2.1 Données d'identification (via Google SSO)</h3>
+  <p>Lors de la connexion avec votre compte Google, ElevApp reçoit :</p>
+  <ul>
+    <li>Votre adresse email Google</li>
+    <li>Votre nom d'affichage Google</li>
+    <li>Votre photo de profil Google (optionnelle)</li>
+    <li>Un identifiant unique Firebase (UID) — non lisible par un humain</li>
+  </ul>
+  <p>ElevApp ne reçoit pas votre mot de passe Google.</p>
+
+  <h3>2.2 Données saisies volontairement</h3>
+  <p>Dans le cadre de l'utilisation normale de l'application :</p>
+  <ul>
+    <li><strong>Données animaux :</strong> nom, espèce, race, date de naissance, sexe, couleur, numéro de puce/tatouage, photo</li>
+    <li><strong>Données sanitaires :</strong> vaccins, vermifuges, traitements, pesées, examens vétérinaires</li>
+    <li><strong>Données reproductives :</strong> portées, saillies, chaleurs, valeurs de progestérone</li>
+    <li><strong>Documents générés :</strong> registres PDF, certificats de cession, snapshots semestriels</li>
+  </ul>
+  <p>Ces données concernent vos animaux et votre activité d'élevage. Elles ne contiennent pas de données sensibles au sens du RGPD (art. 9) concernant des personnes physiques, à l'exception des informations relatives à l'acheteur dans les certificats de cession (nom, adresse).</p>
+
+  <h3>2.3 Données techniques</h3>
+  <ul>
+    <li>Logs de connexion Firebase (horodatage, adresse IP)</li>
+    <li>Données de cache du navigateur (Service Worker — stockage local uniquement)</li>
+  </ul>
+  <p>Aucun cookie tiers, aucun tracker publicitaire, aucune régie publicitaire.</p>
+
+  <!-- ===== 3. FINALITÉS ===== -->
+  <h2>3. Pourquoi ces données sont collectées</h2>
+
+  <table>
+    <thead>
+      <tr><th>Finalité</th><th>Base légale (RGPD)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Authentification et accès au service</td>
+        <td>Exécution du contrat (art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Affichage et gestion de vos données d'élevage</td>
+        <td>Exécution du contrat (art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Génération des documents réglementaires (PDF, registres)</td>
+        <td>Obligation légale (art. 6.1.c) + Exécution du contrat</td>
+      </tr>
+      <tr>
+        <td>Envoi de notifications push (rappels vaccins, chaleurs)</td>
+        <td>Consentement (art. 6.1.a) — révocable à tout moment</td>
+      </tr>
+      <tr>
+        <td>Gestion de l'abonnement et facturation</td>
+        <td>Exécution du contrat (art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Amélioration du service (logs techniques)</td>
+        <td>Intérêt légitime (art. 6.1.f)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== 4. DURÉE DE CONSERVATION ===== -->
+  <h2>4. Durée de conservation</h2>
+
+  <table>
+    <thead>
+      <tr><th>Catégorie</th><th>Durée</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Données du compte actif</td>
+        <td>Pendant toute la durée de l'abonnement</td>
+      </tr>
+      <tr>
+        <td>Données après résiliation ou suppression du compte</td>
+        <td>30 jours (délai de grâce), puis suppression définitive</td>
+      </tr>
+      <tr>
+        <td>Données de facturation</td>
+        <td>10 ans (obligation comptable — art. L123-22 Code de commerce)</td>
+      </tr>
+      <tr>
+        <td>Logs techniques Firebase</td>
+        <td>90 jours maximum</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== 5. PARTAGE ===== -->
+  <h2>5. Partage des données</h2>
+
+  <p>ElevApp <strong>ne vend pas</strong> vos données et <strong>ne les partage pas</strong> avec des tiers à des fins publicitaires ou commerciales.</p>
+
+  <p>Les seuls destinataires de vos données sont :</p>
+  <ul>
+    <li><strong>Google Firebase / Firestore</strong> (hébergement et authentification) — <a href="https://firebase.google.com/support/privacy" target="_blank">Politique de confidentialité Google</a></li>
+    <li><strong>Stripe</strong> (traitement des paiements) — <a href="https://stripe.com/fr/privacy" target="_blank">Politique de confidentialité Stripe</a></li>
+  </ul>
+
+  <p>Ces prestataires agissent en qualité de sous-traitants et sont liés par des engagements de confidentialité conformes au RGPD. Firebase et Stripe sont certifiés conformes aux clauses contractuelles types (CCT) pour les transferts hors UE.</p>
+
+  <!-- ===== 6. VOS DROITS ===== -->
+  <h2>6. Vos droits</h2>
+
+  <p>Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
+
+  <ul>
+    <li><strong>Droit d'accès</strong> — obtenir une copie de vos données personnelles</li>
+    <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
+    <li><strong>Droit à l'effacement</strong> — demander la suppression de votre compte et de vos données</li>
+    <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format structuré et lisible</li>
+    <li><strong>Droit d'opposition</strong> — vous opposer au traitement basé sur l'intérêt légitime</li>
+    <li><strong>Droit de retrait du consentement</strong> — notamment pour les notifications push (dans les paramètres du navigateur)</li>
+  </ul>
+
+  <div class="highlight">
+    <strong>Exercer vos droits :</strong> envoyez un email à <a href="mailto:contact@elevapp.fr">contact@elevapp.fr</a> en précisant votre demande. Réponse sous 30 jours maximum.
+  </div>
+
+  <p>Vous pouvez également supprimer votre compte directement dans l'application (Paramètres → Supprimer mon compte), ce qui entraîne la suppression immédiate de toutes vos données dans Firestore.</p>
+
+  <p>En cas de litige non résolu, vous pouvez saisir la <strong>CNIL</strong> : <a href="https://www.cnil.fr/fr/plaintes" target="_blank">cnil.fr/fr/plaintes</a></p>
+
+  <!-- ===== 7. SÉCURITÉ ===== -->
+  <h2>7. Sécurité</h2>
+
+  <ul>
+    <li>Toutes les communications sont chiffrées via HTTPS (TLS 1.3)</li>
+    <li>L'authentification est gérée par Firebase Auth (standard OAuth 2.0)</li>
+    <li>Chaque utilisateur n'a accès qu'à ses propres données (isolation par UID Firebase)</li>
+    <li>Les règles Firestore imposent que seul l'utilisateur authentifié peut lire/écrire ses données</li>
+    <li>Aucun mot de passe n'est stocké par ElevApp</li>
+  </ul>
+
+  <!-- ===== 8. COOKIES ===== -->
+  <h2>8. Cookies et stockage local</h2>
+
+  <p>ElevApp utilise uniquement :</p>
+  <ul>
+    <li><strong>Cookies Firebase Auth</strong> — nécessaires au maintien de la session. Pas de consentement requis (cookie strictement nécessaire).</li>
+    <li><strong>localStorage du navigateur</strong> — pour mémoriser vos préférences locales (ex : refus des notifications). Ces données ne quittent pas votre appareil.</li>
+    <li><strong>Cache Service Worker</strong> — pour le fonctionnement hors ligne de l'app. Données stockées localement uniquement.</li>
+  </ul>
+  <p>Aucun cookie publicitaire, aucun cookie de tracking, aucun cookie tiers.</p>
+
+  <!-- ===== 9. MINEURS ===== -->
+  <h2>9. Mineurs</h2>
+  <p>
+    ElevApp est destiné à des professionnels et particuliers majeurs. Le service n'est pas destiné aux personnes de moins de 16 ans. Si vous pensez qu'un mineur a créé un compte, contactez-nous à <a href="mailto:contact@elevapp.fr">contact@elevapp.fr</a>.
+  </p>
+
+  <!-- ===== 10. MODIFICATIONS ===== -->
+  <h2>10. Modifications de cette politique</h2>
+  <p>
+    Cette politique peut être mise à jour. Tout changement significatif sera communiqué par email ou notification dans l'application avec un préavis de 15 jours. La date de dernière mise à jour est indiquée en haut de ce document.
+  </p>
+
+  <p class="update-date">Document mis à jour en avril 2026 — <a href="mentions-legales.html">CGU & Mentions légales</a></p>
+
+</div>
+</body>
+</html>

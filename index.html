@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ElevApp — Registre sanitaire numérique pour éleveurs de chiens et chats. Conforme arrêté du 19 juin 2025. Gratuit pour commencer.">
+  <meta name="theme-color" content="#E8983E">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ElevApp — Gestion d'élevage conforme">
+  <meta property="og:description" content="Le registre sanitaire numérique pour éleveurs de chiens et chats. Conforme à la réglementation, simple à utiliser, toujours dans votre poche.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="[URL DE L'APP]">
+
+  <title>ElevApp — Registre sanitaire d'élevage</title>
+
+  <link rel="icon" href="img/icons/icon-192.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:       #E8983E;
+      --accent-dark:  #C97828;
+      --accent-light: #FDF0E2;
+      --bg:           #FAF8F5;
+      --surface:      #FFFFFF;
+      --text:         #2C2417;
+      --text-muted:   #6B5D4F;
+      --text-faint:   #9B8E7E;
+      --border:       #EDE8E0;
+      --success:      #4CAF50;
+      --shadow-sm:    0 2px 8px rgba(44,36,23,0.08);
+      --shadow-md:    0 4px 20px rgba(44,36,23,0.12);
+      --shadow-lg:    0 8px 40px rgba(44,36,23,0.15);
+      --radius:       14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,248,245,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-cta {
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 9px 20px;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .nav-cta:active { transform: translateY(0); }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 72px 20px 60px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 14px 32px;
+      border-radius: 50px;
+      display: inline-block;
+      box-shadow: 0 4px 16px rgba(232,152,62,0.35);
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(232,152,62,0.45);
+    }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 13px 28px;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      display: inline-block;
+      transition: border-color 0.2s, transform 0.1s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+    .hero-note {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--text-faint);
+    }
+
+    /* ===== APP MOCKUP ===== */
+    .mockup-section {
+      padding: 0 20px 80px;
+      text-align: center;
+    }
+    .mockup-wrapper {
+      display: inline-block;
+      position: relative;
+      max-width: 320px;
+      width: 100%;
+    }
+    .mockup-phone {
+      background: var(--text);
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow: var(--shadow-lg);
+    }
+    .mockup-screen {
+      background: var(--bg);
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 9/19;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 10px;
+    }
+    .mock-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mock-avatar {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .mock-header-text { text-align: left; }
+    .mock-header-text .name { font-size: 0.75rem; font-weight: 800; color: var(--text); }
+    .mock-header-text .sub { font-size: 0.65rem; color: var(--text-muted); }
+    .mock-stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .mock-stat {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 10px 10px 8px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .mock-stat .num { font-size: 1.3rem; font-weight: 900; color: var(--accent); }
+    .mock-stat .lbl { font-size: 0.6rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .mock-card {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mock-card-icon {
+      width: 32px; height: 32px;
+      background: var(--accent-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .mock-card-text { text-align: left; }
+    .mock-card-text .title { font-size: 0.7rem; font-weight: 800; color: var(--text); }
+    .mock-card-text .sub { font-size: 0.6rem; color: var(--text-muted); }
+    .mock-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .mock-badge.green { background: #e8f5e9; color: #2e7d32; }
+    .mock-badge.orange { background: var(--accent-light); color: var(--accent-dark); }
+    .mock-badge.blue { background: #e3f2fd; color: #1565c0; }
+
+    .mockup-caption {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ===== SECTION TITRE ===== */
+    .section-label {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 48px;
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    .features-section { padding: 80px 20px; background: var(--surface); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== CONFORMITE ===== */
+    .conformite-section {
+      padding: 80px 20px;
+      background: var(--text);
+      color: white;
+    }
+    .conformite-section .section-title { color: white; }
+    .conformite-section .section-sub { color: rgba(255,255,255,0.65); }
+    .conformite-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .conformite-item {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 20px 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .conformite-item .icon { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+    .conformite-item .law { font-size: 0.72rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .conformite-item .desc { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.55; }
+
+    /* ===== PRICING ===== */
+    .pricing-section { padding: 80px 20px; background: var(--bg); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      border: 2px solid var(--border);
+      position: relative;
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 4px 24px rgba(232,152,62,0.2);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 5px 18px;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .pricing-name { font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .pricing-price { font-size: 2.4rem; font-weight: 900; color: var(--text); line-height: 1; margin-bottom: 4px; }
+    .pricing-price span { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+    .pricing-annual { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 24px; }
+    .pricing-annual strong { color: var(--success); }
+    .pricing-features { list-style: none; margin-bottom: 28px; }
+    .pricing-features li {
+      padding: 7px 0;
+      font-size: 0.88rem;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features li .check { color: var(--success); font-weight: 900; flex-shrink: 0; }
+    .pricing-features li .cross { color: var(--text-faint); flex-shrink: 0; }
+    .pricing-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 13px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .pricing-cta.primary { background: var(--accent); color: white; }
+    .pricing-cta.primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .pricing-cta.secondary { background: var(--bg); color: var(--text); border: 2px solid var(--border); }
+    .pricing-cta.secondary:hover { border-color: var(--accent); }
+
+    /* ===== FAQ ===== */
+    .faq-section { padding: 80px 20px; background: var(--surface); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      padding: 20px 0;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-chevron {
+      flex-shrink: 0;
+      transition: transform 0.3s;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer { max-height: 500px; padding-bottom: 20px; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #E8983E 0%, #C97828 100%);
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 900;
+      color: white;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+    .cta-section .btn-white {
+      background: white;
+      color: var(--accent-dark);
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 14px 36px;
+      border-radius: 50px;
+      display: inline-block;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .cta-section .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.2); }
+    .cta-section .btn-white:active { transform: none; }
+    .cta-note { margin-top: 14px; font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.65);
+      padding: 48px 20px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .footer-brand .logo img { width: 30px; height: 30px; border-radius: 7px; }
+    .footer-brand p { font-size: 0.84rem; max-width: 240px; line-height: 1.6; }
+    .footer-links h4 { color: white; font-size: 0.85rem; font-weight: 800; margin-bottom: 14px; }
+    .footer-links ul { list-style: none; }
+    .footer-links ul li { margin-bottom: 8px; }
+    .footer-links ul li a {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-links ul li a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 1.9rem; }
+      .hero p { font-size: 0.97rem; }
+      .btn-primary, .btn-secondary { font-size: 0.95rem; padding: 13px 24px; }
+      .features-section, .conformite-section, .pricing-section, .faq-section, .cta-section { padding: 56px 20px; }
+      .footer-top { flex-direction: column; }
+      .pricing-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="img/icons/icon-192.png" alt="ElevApp logo">
+        ElevApp
+      </a>
+      <a href="app.html" class="nav-cta">Essayer gratuitement →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section>
+    <div class="hero">
+      <div class="hero-badge">🇫🇷 Conforme arrêté du 19 juin 2025</div>
+      <h1>Le registre sanitaire<br><span>qui simplifie votre élevage</span></h1>
+      <p>ElevApp remplace les cahiers papier par une application intuitive, toujours à portée de main. Chiens, chats, portées, vaccins, cessions — tout est là, conforme, exportable.</p>
+      <div class="hero-actions">
+        <a href="app.html" class="btn-primary">Essayer gratuitement →</a>
+        <a href="#fonctionnalites" class="btn-secondary">Voir les fonctionnalités</a>
+      </div>
+      <p class="hero-note">✔ Gratuit jusqu'à 3 animaux &nbsp;·&nbsp; ✔ Aucune CB requise &nbsp;·&nbsp; ✔ Installation en 30 secondes</p>
+    </div>
+  </section>
+
+  <!-- MOCKUP APP -->
+  <section class="mockup-section">
+    <div class="mockup-wrapper">
+      <div class="mockup-phone">
+        <div class="mockup-screen">
+          <!-- Header -->
+          <div class="mock-header">
+            <div class="mock-avatar">🐾</div>
+            <div class="mock-header-text">
+              <div class="name">Tableau de bord</div>
+              <div class="sub">Élevage du Vallon · Canin</div>
+            </div>
+          </div>
+          <!-- Stats -->
+          <div class="mock-stat-row">
+            <div class="mock-stat">
+              <div class="num">7</div>
+              <div class="lbl">Animaux</div>
+            </div>
+            <div class="mock-stat">
+              <div class="num">2</div>
+              <div class="lbl">Portées actives</div>
+            </div>
+          </div>
+          <!-- Cards -->
+          <div class="mock-card">
+            <div class="mock-card-icon">🐕</div>
+            <div class="mock-card-text">
+              <div class="title">Luna — Golden Retriever</div>
+              <div class="sub">F · Reproductrice · 3 ans</div>
+              <span class="mock-badge green">✓ Vaccins à jour</span>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-icon">🍼</div>
+            <div class="mock-card-text">
+              <div class="title">Portée Mars 2026</div>
+              <div class="sub">6 chiots · Mise bas 14/03</div>
+              <span class="mock-badge orange">📋 Cessions à faire</span>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-icon">📅</div>
+            <div class="mock-card-text">
+              <div class="title">Rappel vaccin</div>
+              <div class="sub">Bella · DHPPiR — dans 12 j.</div>
+              <span class="mock-badge blue">⏰ À prévoir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mockup-caption">Interface réelle de l'application</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" id="fonctionnalites">
+    <div class="container">
+      <p class="section-label">Pourquoi ElevApp</p>
+      <h2 class="section-title">Tout ce dont un éleveur a besoin</h2>
+      <p class="section-sub">Conçu par et pour les éleveurs passionnés. Pas de jargon technique, pas de formation — vous êtes opérationnel en 5 minutes.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">📋</span>
+          <h3>Registre sanitaire numérique</h3>
+          <p>Vaccins, vermifugations, visites vétérinaires, traitements — tout l'historique de chaque animal en un coup d'œil. Export PDF conforme pour votre vétérinaire sanitaire.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🍼</span>
+          <h3>Gestion des portées</h3>
+          <p>Saisissez chaque chiot ou chaton dès la naissance : poids, sexe, couleur, micropuce. Suivez les pesées semaine après semaine et exportez la fiche individuelle en PDF.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📄</span>
+          <h3>Certificats de cession</h3>
+          <p>Générez les attestations de cession pré-remplies en un clic, avec coordonnées de l'acquéreur, numéro d'identification et mentions légales obligatoires.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📅</span>
+          <h3>Rappels & Calendrier</h3>
+          <p>Ne ratez plus jamais un rappel vaccinal, une visite vétérinaire ou un contrôle. Les notifications vous alertent automatiquement au bon moment.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">♀️</span>
+          <h3>Suivi des chaleurs</h3>
+          <p>Enregistrez les cycles, les saillies et suivez la progestérone. L'app calcule les fenêtres optimales de reproduction et les dates de mise bas prévisionnelles.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">✅</span>
+          <h3>Autocontrôle réglementaire</h3>
+          <p>Vérifiez en temps réel votre conformité avec l'arrêté du 19 juin 2025 : identification, vaccinations, visites vétérinaires, tenue du registre. Un feu vert, c'est une sérénité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFORMITE -->
+  <section class="conformite-section">
+    <div class="container">
+      <p class="section-label" style="color:var(--accent);">Conformité réglementaire</p>
+      <h2 class="section-title">Fait pour respecter la loi</h2>
+      <p class="section-sub">L'arrêté du 19 juin 2025 impose de nouvelles obligations aux éleveurs. ElevApp est conçu pour toutes les respecter.</p>
+      <div class="conformite-grid">
+        <div class="conformite-item">
+          <span class="icon">🪪</span>
+          <div class="law">Art. L214-8</div>
+          <div class="desc">Registre d'identification obligatoire avec tous les numéros de puce ou tatouage.</div>
+        </div>
+        <div class="conformite-item">
+          <span class="icon">💉</span>
+          <div class="law">Art. 7-8</div>
+          <div class="desc">Suivi complet des vaccinations et des visites du vétérinaire sanitaire.</div>
+        </div>
+        <div class="conformite-item">
+          <span class="icon">🔬</span>
+          <div class="law">Art. 9</div>
+          <div class="desc">Traçabilité des traitements, vermifugations et dépistages obligatoires.</div>
+        </div>
+        <div class="conformite-item">
+          <span class="icon">📦</span>
+          <div class="law">Art. 26</div>
+          <div class="desc">Snapshot semestriel automatique pour la sauvegarde réglementaire des données.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing-section" id="tarifs">
+    <div class="container">
+      <p class="section-label">Tarifs</p>
+      <h2 class="section-title">Simple et transparent</h2>
+      <p class="section-sub">Commencez gratuitement. Passez en Premium quand votre élevage grandit.</p>
+      <div class="pricing-grid">
+        <!-- Gratuit -->
+        <div class="pricing-card">
+          <div class="pricing-name">Gratuit</div>
+          <div class="pricing-price">0 €<span> /mois</span></div>
+          <div class="pricing-annual">&nbsp;</div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Jusqu'à 3 animaux</li>
+            <li><span class="check">✓</span> 1 portée active</li>
+            <li><span class="check">✓</span> Registre sanitaire complet</li>
+            <li><span class="check">✓</span> Rappels & notifications</li>
+            <li><span class="check">✓</span> Export PDF registre</li>
+            <li><span class="cross">✗</span> <span style="color:var(--text-faint)">Animaux illimités</span></li>
+            <li><span class="cross">✗</span> <span style="color:var(--text-faint)">Portées illimitées</span></li>
+          </ul>
+          <a href="app.html" class="pricing-cta secondary">Commencer gratuitement</a>
+        </div>
+        <!-- Premium -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge">⭐ Recommandé</div>
+          <div class="pricing-name">Premium</div>
+          <div class="pricing-price">9,90 €<span> /mois</span></div>
+          <div class="pricing-annual">ou <strong>89 € /an</strong> — économisez 30 %</div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Animaux illimités</li>
+            <li><span class="check">✓</span> Portées illimitées</li>
+            <li><span class="check">✓</span> Registre sanitaire complet</li>
+            <li><span class="check">✓</span> Rappels & notifications</li>
+            <li><span class="check">✓</span> Export PDF registre</li>
+            <li><span class="check">✓</span> Export DDPP dossier complet</li>
+            <li><span class="check">✓</span> Fiches PDF par chiot/chaton</li>
+          </ul>
+          <a href="app.html" class="pricing-cta primary">Essayer 14 jours gratuits →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <p class="section-label">Questions fréquentes</p>
+      <h2 class="section-title">On répond à tout</h2>
+      <p class="section-sub" style="margin-bottom:40px;">Pas de jargon, des réponses claires.</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            L'app fonctionne-t-elle sans connexion internet ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Oui. ElevApp est une PWA (Progressive Web App) installable sur votre téléphone comme une app native. Vous pouvez consulter vos données en mode hors-ligne. La synchronisation s'effectue automatiquement dès la reconnexion.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Faut-il l'installer depuis l'App Store ou Google Play ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Non. ElevApp s'installe directement depuis votre navigateur — appuyez sur "Ajouter à l'écran d'accueil" sur iOS Safari ou Chrome Android. Pas de passage par les stores, pas de mises à jour manuelles.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Mes données sont-elles sécurisées ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Vos données sont hébergées sur Google Firebase, certifié RGPD, chiffrées en transit (HTTPS/TLS) et au repos. Chaque compte est isolé — personne d'autre ne peut accéder à vos informations. Vous pouvez exporter ou supprimer vos données à tout moment.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            L'app gère-t-elle les chats et les chiens ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Oui, ElevApp est conçue pour les éleveurs canins et félins. Vous pouvez configurer votre profil pour afficher uniquement l'espèce qui vous concerne, ou gérer les deux simultanément.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Puis-je exporter mes données pour la DDPP ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Oui. L'export DDPP est disponible en version Premium. Il génère un dossier complet (registre, fiches animaux, historique sanitaire) au format PDF, prêt à être présenté en cas de contrôle.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Je peux annuler mon abonnement Premium à tout moment ?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer">
+            Absolument. Aucun engagement, aucune pénalité. Vous annulez en un clic depuis votre profil. Vos données restent accessibles jusqu'à la fin de la période payée, puis votre compte passe en version gratuite (3 animaux max).
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <h2>Prêt à moderniser<br>votre élevage ?</h2>
+    <p>Rejoignez les éleveurs qui font confiance à ElevApp pour gérer leur registre sanitaire simplement et conformément à la loi.</p>
+    <a href="app.html" class="btn-white">Commencer gratuitement →</a>
+    <p class="cta-note">Aucune carte bancaire requise · Gratuit jusqu'à 3 animaux</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="img/icons/icon-192.png" alt="ElevApp">
+            ElevApp
+          </div>
+          <p>Le registre sanitaire numérique pour éleveurs de chiens et chats. Simple, conforme, toujours disponible.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Application</h4>
+          <ul>
+            <li><a href="app.html">Accéder à l'app</a></li>
+            <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Légal</h4>
+          <ul>
+            <li><a href="mentions-legales.html">CGU & Mentions légales</a></li>
+            <li><a href="confidentialite.html">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="mailto:contact@elevapp.fr">contact@elevapp.fr</a></li>
+            <li><a href="app.html#aide">Centre d'aide</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ElevApp — Tous droits réservés</span>
+        <span>Fait avec 🐾 pour les éleveurs passionnés</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAQ SCRIPT -->
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
